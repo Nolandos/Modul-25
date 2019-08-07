@@ -1,34 +1,33 @@
 //Import Modules
 const express = require('express');
 const bodyParser = require('body-parser');
-var fs = require('fs');
 
 //Create app 
 const app = express();
-let stringifyFile;
 
 //Middlewares
 app.use(bodyParser.json());
-app.use(express.static('assets'));
+app.use('/store', function(req, res, next){
+    console.log('Jestem pośrednikiem przy żądaniu do /store');
+    next();
+});
 
 //ROUTES
 app.get('/', (req, res) => {
-    res.sendFile('/index.html');
+    res.send('Witaj Wędrowcze');
 });
 
-app.get('/userform', function (req, res) {
-    const response = {
-        first_name: req.query.first_name,
-        last_name: req.query.last_name
-    };
-    res.json(response);
+app.get('/store', function (req, res) {
+    res.send('To jest sklep');
 });
-
 
 //Listening on PORT
-var server = app.listen(3000, 'localhost', function() {
-    var host = server.address().address;
-    var port = server.address().port;
+let server = app.listen(3000, 'localhost', function() {
+    let host = server.address().address;
+    let port = server.address().port;
 
     console.log('Przykładowa aplikacja nasłuchuje na http://' + host + ':' + port);
+});
+app.use(function (req, res, next) {
+    res.status(404).send('Wybacz, nie mogliśmy odnaleźć tego, czego żądasz!')
 });
