@@ -1,0 +1,13 @@
+doctype html
+html
+    head
+        title=name
+        link(rel="stylesheet" type="text/css" href=style)
+    body
+        h1.title Zaloguj się 
+        form.login-form(action=url method=method)
+            label(for="login") Login:
+            input(type="text" required name="login")
+            label(for="password") Hasło:
+            input(type="password" required name="password")
+            button.send Zaloguj
